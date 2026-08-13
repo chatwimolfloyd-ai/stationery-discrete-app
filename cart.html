@@ -7,14 +7,13 @@
     <style>
         /* [DESIGN SYSTEM: Pastel Modern Theme] */
         :root {
-            --bg-color: #f8f6f0;       /* สีครีมพาสเทล */
-            --card-bg: #ffffff;        /* สีขาว */
-            --primary: #4a6fa5;        /* สีน้ำเงินกรมท่าพาสเทล */
-            --primary-dark: #3b5984;   /* สีน้ำเงินเข้ม */
-            --accent: #e67e22;         /* สีส้มพาสเทล */
-            --text-color: #2c3e50;     /* สีเทาเข้ม */
-            --text-muted: #64748b;     /* สีเทาอ่อน */
-            --border-radius: 12px;
+            --bg-color: #F8F9FA;       /* สีครีม/เทาอ่อนพาสเทล */
+            --card-bg: #FFFFFF;        /* สีขาว */
+            --pink-pastel: #FFCCD5;    /* ชมพูพาสเทล */
+            --green-pastel: #C7F9CC;   /* เขียวพาสเทล */
+            --text-dark: #2C3E50;      /* สีเทาเข้มอ่านง่าย */
+            --text-muted: #64748B;     /* สีเทาอ่อน */
+            --border-radius: 16px;
         }
 
         * {
@@ -26,15 +25,15 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-dark);
             line-height: 1.6;
             padding-bottom: 50px;
         }
 
-        /* Header Navigation */
+        /* Header Navigation Header */
         header {
             background-color: var(--card-bg);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -43,7 +42,7 @@
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -52,16 +51,16 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
             text-decoration: none;
         }
 
         .logo img {
             object-fit: contain;
-            border-radius: 6px;
+            border-radius: 10px;
         }
 
         nav ul {
@@ -72,26 +71,27 @@
 
         nav a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--text-dark);
             font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 22px;
+            border-radius: 25px;
             transition: all 0.3s;
             cursor: pointer;
         }
 
         nav a.active, nav a:hover {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--pink-pastel);
+            color: var(--text-dark);
         }
 
         .cart-badge {
-            background: var(--accent);
-            color: white;
-            font-size: 12px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 4px;
+            background: var(--green-pastel);
+            color: var(--text-dark);
+            font-size: 13px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-left: 6px;
         }
 
         /* Main Container Layout */
@@ -107,7 +107,8 @@
 
         .page-header h1 {
             font-size: 28px;
-            color: var(--text-color);
+            color: var(--text-dark);
+            font-weight: 800;
         }
 
         .checkout-grid {
@@ -121,8 +122,8 @@
         .cart-table-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #F1F5F9;
             overflow: hidden;
             margin-bottom: 35px;
         }
@@ -134,17 +135,17 @@
         }
 
         .cart-table th {
-            background: #f8fafc;
+            background: #FAFAFA;
             padding: 16px 20px;
             font-weight: bold;
-            color: var(--text-color);
-            border-bottom: 1px solid #e2e8f0;
+            color: var(--text-dark);
+            border-bottom: 1px solid #E2E8F0;
             font-size: 14px;
         }
 
         .cart-table td {
             padding: 18px 20px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #F1F5F9;
             vertical-align: middle;
         }
 
@@ -156,10 +157,10 @@
 
         .product-icon {
             font-size: 28px;
-            background: #f1f5f9;
-            width: 45px;
-            height: 45px;
-            border-radius: 8px;
+            background: #FFF5F7;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -172,26 +173,25 @@
         }
 
         .qty-btn {
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .qty-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
+            background: var(--pink-pastel);
+            border-color: var(--pink-pastel);
         }
 
         .remove-btn {
             background: none;
             border: none;
-            color: #ef4444;
+            color: #EF4444;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
@@ -209,6 +209,7 @@
         .recommendation-title {
             font-size: 20px;
             margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .recommendation-subtitle {
@@ -222,8 +223,8 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #F1F5F9;
             position: sticky;
             top: 90px;
         }
@@ -232,7 +233,8 @@
             font-size: 20px;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid #F1F5F9;
+            font-weight: 700;
         }
 
         .summary-row {
@@ -245,26 +247,26 @@
         .summary-row.total {
             font-size: 20px;
             font-weight: bold;
-            color: var(--primary-dark);
+            color: var(--text-dark);
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 2px dashed #e2e8f0;
+            border-top: 2px dashed #E2E8F0;
         }
 
         /* Special Options (Checkboxes) */
         .options-group {
             margin: 20px 0;
-            padding: 16px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            padding: 18px;
+            background: #FAFAFA;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
         }
 
         .options-title {
             font-size: 14px;
             font-weight: bold;
             margin-bottom: 12px;
-            color: var(--text-color);
+            color: var(--text-dark);
         }
 
         .checkbox-label {
@@ -272,7 +274,7 @@
             align-items: center;
             gap: 10px;
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             cursor: pointer;
             user-select: none;
         }
@@ -282,30 +284,30 @@
         }
 
         .checkbox-label input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+            accent-color: var(--text-dark);
             cursor: pointer;
         }
 
         .btn {
-            background: var(--primary);
-            color: white;
+            background: var(--pink-pastel);
+            color: var(--text-dark);
             border: none;
             padding: 12px 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
             width: 100%;
             font-size: 16px;
-            transition: background 0.2s;
+            transition: all 0.2s;
             text-align: center;
             display: block;
             text-decoration: none;
         }
 
         .btn:hover {
-            background: var(--primary-dark);
+            background: #FFB3C1;
         }
 
         /* Product Cards Grid */
@@ -318,9 +320,9 @@
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            border: 1px solid #edf2f7;
+            padding: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #F1F5F9;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -328,8 +330,8 @@
 
         .card-img {
             height: 120px;
-            background: #f1f5f9;
-            border-radius: 8px;
+            background: #FFF5F7;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -346,7 +348,7 @@
         .price {
             font-size: 17px;
             font-weight: bold;
-            color: var(--accent);
+            color: #E67E22;
             margin-bottom: 12px;
         }
 
@@ -355,11 +357,15 @@
             padding: 60px 20px;
             text-align: center;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         /* Responsive Layout */
         @media (max-width: 868px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
             .checkout-grid {
                 grid-template-columns: 1fr;
             }
@@ -375,7 +381,7 @@
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">
-                <img src="logo.jpg" alt="Sweet Note Shop Logo" style="height: 40px; width: auto;">
+                <img src="logo.jpg" alt="Sweet Note Shop Logo" style="height: 100px; width: auto;">
                 <span>Sweet Note Shop</span>
             </a>
             <nav>
@@ -407,6 +413,7 @@
         // =========================================================================
         // [DISCRETE MATH: Universal Set U]
         // ฐานข้อมูลสินค้าจำลองทั้งหมดในร้าน (เอกภพสัมพัทธ์ U)
+        // U = { p1, p2, p3, p4, p5, p6, p7, p8 }
         // =========================================================================
         const UNIVERSE_PRODUCTS = [
             { id: 1, name: "ปากกาลูกลื่น Gel Ink 0.5", category: "Pen", price: 25, inStock: true, icon: "🖊️" },
@@ -454,7 +461,7 @@
                         <div style="font-size: 50px; margin-bottom: 15px;">🛒</div>
                         <h2>ตะกร้าสินค้าของคุณยังว่างอยู่</h2>
                         <p style="color: var(--text-muted); margin: 10px 0 25px 0;">เลือกชมสินค้าเครื่องเขียนคุณภาพแล้วหยิบใส่ตะกร้าได้เลยครับ</p>
-                        <a href="products.html" class="btn" style="display: inline-block; width: auto; padding: 10px 24px;">เลือกชมสินค้า</a>
+                        <a href="products.html" class="btn" style="display: inline-block; width: auto; padding: 12px 28px; background: var(--green-pastel);">เลือกชมสินค้า</a>
                     </div>
                     <div class="recommendation-section" style="margin-top: 40px;">
                         <h2 class="recommendation-title">💡 สินค้าแนะนำสำหรับคุณ</h2>
@@ -519,7 +526,7 @@
                                                     <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
                                                 </div>
                                             </td>
-                                            <td style="font-weight: bold; color: var(--primary-dark);">฿${item.price * item.quantity}</td>
+                                            <td style="font-weight: bold; color: var(--text-dark);">฿${item.price * item.quantity}</td>
                                             <td>
                                                 <button class="remove-btn" onclick="removeItem(${item.id})">ลบ</button>
                                             </td>
@@ -548,7 +555,7 @@
 
                         <div class="summary-row">
                             <span>ส่วนลดโปรโมชัน</span>
-                            <span style="color: ${isDiscountEligible ? 'green' : 'var(--text-muted)'};">
+                            <span style="color: ${isDiscountEligible ? 'green' : 'var(--text-muted)'}; font-weight: ${isDiscountEligible ? 'bold' : 'normal'};">
                                 ${isDiscountEligible ? `-฿${discountAmount.toFixed(2)}` : '฿0.00'}
                             </span>
                         </div>
@@ -556,7 +563,7 @@
                         <div class="summary-row">
                             <span>ค่าจัดส่ง</span>
                             <span>
-                                ${isFreeShipping && !userOptions.isExpress ? '<span style="color:green;">ฟรี</span>' : `฿${shippingFee}`}
+                                ${isFreeShipping && !userOptions.isExpress ? '<span style="color:green; font-weight:bold;">ฟรี</span>' : `฿${shippingFee}`}
                             </span>
                         </div>
 
@@ -595,7 +602,7 @@
                 </div>
             `;
 
-            // เรียกประมวลผลระบบแนะนำสินค้า
+            // เรียกประมวลผลระบบแนะนำสินค้าด้วย Set Difference
             const cartProductIds = cart.map(item => item.id);
             renderRecommendations(cartProductIds);
         }

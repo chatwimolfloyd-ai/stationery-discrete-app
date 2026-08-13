@@ -7,14 +7,13 @@
     <style>
         /* [DESIGN SYSTEM: Pastel Modern Theme] */
         :root {
-            --bg-color: #f8f6f0;       /* สีครีมพาสเทล */
-            --card-bg: #ffffff;        /* สีขาว */
-            --primary: #4a6fa5;        /* สีน้ำเงินกรมท่าพาสเทล */
-            --primary-dark: #3b5984;   /* สีน้ำเงินเข้ม */
-            --accent: #e67e22;         /* สีส้มพาสเทล */
-            --text-color: #2c3e50;     /* สีเทาเข้ม */
-            --text-muted: #64748b;     /* สีเทาอ่อน */
-            --border-radius: 12px;
+            --bg-color: #F8F9FA;       /* สีครีม/เทาอ่อนพาสเทล */
+            --card-bg: #FFFFFF;        /* สีขาว */
+            --pink-pastel: #FFCCD5;    /* ชมพูพาสเทล */
+            --green-pastel: #C7F9CC;   /* เขียวพาสเทล */
+            --text-dark: #2C3E50;      /* สีเทาเข้มอ่านง่าย */
+            --text-muted: #64748B;     /* สีเทาอ่อน */
+            --border-radius: 16px;
         }
 
         * {
@@ -26,15 +25,15 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-dark);
             line-height: 1.6;
             padding-bottom: 50px;
         }
 
-        /* Header Navigation */
+        /* Header Navigation Header */
         header {
             background-color: var(--card-bg);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -43,7 +42,7 @@
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -52,16 +51,16 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
             text-decoration: none;
         }
 
         .logo img {
             object-fit: contain;
-            border-radius: 6px;
+            border-radius: 10px;
         }
 
         nav ul {
@@ -72,26 +71,27 @@
 
         nav a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--text-dark);
             font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 22px;
+            border-radius: 25px;
             transition: all 0.3s;
             cursor: pointer;
         }
 
         nav a.active, nav a:hover {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--pink-pastel);
+            color: var(--text-dark);
         }
 
         .cart-badge {
-            background: var(--accent);
-            color: white;
-            font-size: 12px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 4px;
+            background: var(--green-pastel);
+            color: var(--text-dark);
+            font-size: 13px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 12px;
+            margin-left: 6px;
         }
 
         /* Main Container */
@@ -107,7 +107,8 @@
 
         .page-header h1 {
             font-size: 28px;
-            color: var(--text-color);
+            color: var(--text-dark);
+            font-weight: 800;
         }
 
         .page-header p {
@@ -118,14 +119,14 @@
         /* Filter & Search Toolbar */
         .filter-toolbar {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 22px;
             border-radius: var(--border-radius);
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid #edf2f7;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #F1F5F9;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
         }
 
         .search-box {
@@ -137,16 +138,18 @@
         .search-input {
             width: 100%;
             padding: 12px 18px 12px 42px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #E2E8F0;
             border-radius: 25px;
             font-size: 14px;
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: #FAFAFA;
         }
 
         .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.15);
+            border-color: var(--pink-pastel);
+            box-shadow: 0 0 0 3px rgba(255, 204, 213, 0.4);
+            background-color: #FFFFFF;
         }
 
         .search-icon {
@@ -160,16 +163,16 @@
 
         .filter-btn-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background: #f1f5f9;
-            color: var(--text-color);
-            border: 1px solid #cbd5e1;
-            padding: 8px 18px;
-            border-radius: 20px;
+            background: #F1F5F9;
+            color: var(--text-dark);
+            border: 1px solid #E2E8F0;
+            padding: 10px 22px;
+            border-radius: 25px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -177,14 +180,15 @@
         }
 
         .filter-btn:hover {
-            background: #e2e8f0;
+            background: #E2E8F0;
         }
 
         .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            box-shadow: 0 2px 6px rgba(74, 111, 165, 0.25);
+            background: var(--pink-pastel);
+            color: var(--text-dark);
+            border-color: var(--pink-pastel);
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 204, 213, 0.4);
         }
 
         /* Product Cards Grid */
@@ -197,24 +201,24 @@
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            padding: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border: 1px solid #edf2f7;
+            border: 1px solid #F1F5F9;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.06);
         }
 
         .card-img {
             height: 160px;
-            background: #f1f5f9;
-            border-radius: 8px;
+            background: #FFF5F7;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -230,9 +234,9 @@
 
         .card-badge {
             display: inline-block;
-            background: #e2e8f0;
+            background: #F1F5F9;
             color: var(--text-muted);
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
@@ -243,36 +247,35 @@
         .price {
             font-size: 20px;
             font-weight: bold;
-            color: var(--accent);
+            color: #E67E22;
             margin-bottom: 15px;
         }
 
         .btn {
-            background: var(--primary);
-            color: white;
+            background: var(--pink-pastel);
+            color: var(--text-dark);
             border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 12px 18px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
             width: 100%;
-            transition: background 0.2s;
+            transition: all 0.2s;
             text-align: center;
         }
 
         .btn:hover {
-            background: var(--primary-dark);
+            background: #FFB3C1;
         }
 
         .btn-outline {
             background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
+            color: var(--text-dark);
+            border: 2px solid var(--pink-pastel);
         }
 
         .btn-outline:hover {
-            background: var(--primary);
-            color: white;
+            background: var(--pink-pastel);
         }
 
         .no-results {
@@ -306,7 +309,7 @@
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">
-                <img src="logo.jpg" alt="Sweet Note Shop Logo" style="height: 40px; width: auto;">
+                <img src="logo.jpg" alt="Sweet Note Shop Logo" style="height: 100px; width: auto;">
                 <span>Sweet Note Shop</span>
             </a>
             <nav>
@@ -328,10 +331,10 @@
         <!-- Page Header -->
         <div class="page-header">
             <h1>สินค้าทั้งหมด</h1>
-            <p>เลือกซื้อเครื่องเขียนคุณภาพ ค้นหาและเลือกดูตามหมวดหมู่ที่คุณต้องการ</p>
+            <p>เลือกซื้อเครื่องเขียนน่ารัก คุณภาพดี ค้นหาและเลือกดูตามหมวดหมู่ที่คุณต้องการ</p>
         </div>
 
-        <!-- Filter & Search Toolbar (E-Commerce Style UI) -->
+        <!-- Filter & Search Toolbar (E-Commerce Clean UI) -->
         <div class="filter-toolbar">
             <!-- Search Bar -->
             <div class="search-box">
@@ -339,7 +342,7 @@
                 <input type="text" id="search-input" class="search-input" placeholder="ค้นหาชื่อสินค้า..." oninput="applyFilters()">
             </div>
 
-            <!-- E-Commerce Category Filter Buttons -->
+            <!-- E-Commerce Category Buttons -->
             <div class="filter-btn-group">
                 <button class="filter-btn active" id="btn-all" onclick="setFilterMode('ALL')">สินค้าทั้งหมด</button>
                 <button class="filter-btn" id="btn-union" onclick="setFilterMode('PEN_AND_PENCIL')">ปากกาและดินสอ</button>
@@ -358,6 +361,7 @@
         // =========================================================================
         // [DISCRETE MATH: Universal Set U]
         // ข้อมูลจำลองเครื่องเขียนทั้งหมดในร้าน (เอกภพสัมพัทธ์ U)
+        // U = { p1, p2, p3, p4, p5, p6, p7, p8 }
         // =========================================================================
         const UNIVERSE_PRODUCTS = [
             { id: 1, name: "ปากกาลูกลื่น Gel Ink 0.5", category: "Pen", price: 25, inStock: true, icon: "🖊️" },
@@ -370,10 +374,10 @@
             { id: 8, name: "ไส้ดินสอกด 2B 0.5mm", category: "Pencil", price: 20, inStock: true, icon: "✏️" }
         ];
 
-        // Global State สำหรับโหมดกรองสินค้า
+        // Global State สำหรับเก็บโหมดการกรองสินค้าปัจจุบัน
         let currentFilterMode = 'ALL';
 
-        // สลับโหมดการกรองสินค้าและอัปเดตสไตล์ของปุ่ม UI
+        // เปลี่ยนโหมดตัวกรองสินค้าและอัปเดตสไตล์ Active บน UI
         function setFilterMode(mode) {
             currentFilterMode = mode;
 
@@ -393,7 +397,7 @@
         function applyFilters() {
             const keyword = document.getElementById('search-input').value.toLowerCase().trim();
 
-            // 1. สร้าง Subsets จาก Universal Set U โดยใช้ Set Constructor และ Array.prototype.filter()
+            // 1. สร้าง Subsets จาก Universal Set U โดยใช้ new Set() และ Array.prototype.filter()
             const penSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Pen').map(p => p.id));
             const pencilSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Pencil').map(p => p.id));
             const paperSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Paper').map(p => p.id));
@@ -409,7 +413,7 @@
             } else if (currentFilterMode === 'PEN_AND_PENCIL') {
                 // [Set Union: A ∪ B] (ปุ่ม "ปากกาและดินสอ")
                 // สูตรเซต: { x ∈ U | x ∈ Pencil ∨ x ∈ Pen }
-                // ใช้ Set.prototype.has() ตรวจสอบความเป็นสมาชิกร่วมกับตัวดำเนินการ Logical OR (||)
+                // ใช้ Set.prototype.has() ร่วมกับตัวดำเนินการ Logical OR (||)
                 filteredList = UNIVERSE_PRODUCTS.filter(p => pencilSet.has(p.id) || penSet.has(p.id));
 
             } else if (currentFilterMode === 'PEN_IN_STOCK') {
@@ -430,11 +434,11 @@
                 filteredList = filteredList.filter(p => p.name.toLowerCase().includes(keyword));
             }
 
-            // 4. นำผลลัพธ์จากการดำเนินการเซตไปแสดงบน UI
+            // 4. แสดงผลการ์ดสินค้าที่ประมวลผลได้ขึ้นบนหน้าจอ UI
             renderProductsGrid(filteredList);
         }
 
-        // แสดงผลการ์ดสินค้าบน Grid
+        // แสดงผลการ์ดสินค้าลงใน Grid
         function renderProductsGrid(products) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
