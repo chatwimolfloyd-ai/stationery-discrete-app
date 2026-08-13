@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaperCraft Station - Web App ร้านเครื่องเขียน (Discrete Math Applied)</title>
+    <style>
+        :root {
+            --bg-color: #f8f6f0;
+            --card-bg: #ffffff;
+            --primary: #4a6fa5;
+            --primary-dark: #3b5984;
+            --accent: #e67e22;
+            --text-color: #2c3e50;
+            --math-bg: #1e293b;
+            --math-text: #38bdf8;
+            --math-border: #0284c7;
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* Header Navigation */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        nav a.active, nav a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .cart-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Discrete Math Explanation Panel */
+        .math-panel {
+            background-color: var(--math-bg);
+            color: #f1f5f9;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border-left: 5px solid var(--math-border);
+            margin-bottom: 25px;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .math-panel h3 {
+            color: var(--math-text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .math-code {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 6px;
+            color: #a5f3fc;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-size: 14px;
+        }
+
+        .math-highlight {
+            color: #f43f5e;
+            font-weight: bold;
+        }
+
+        .math-set {
+            color: #facc15;
+        }
+
+        /* Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hero-banner h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        /* Cards & Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            height: 160px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Filter Controls on Products Page */
+        .filter-controls {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .search-input {
+            padding: 10px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 300px;
+            outline: none;
+        }
+
+        /* Table & Checkout Layout */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .cart-table th, .cart-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .cart-table th {
+            background: #f1f5f9;
+            font-weight: bold;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .summary-item.total {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            border-bottom: none;
+        }
+
+        .checkbox-group {
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .truth-table th, .truth-table td {
+            border: 1px solid #475569;
+            padding: 4px 8px;
+            text-align: center;
+        }
+
+        .truth-table th {
+            background: #0f172a;
+            color: #38bdf8;
+        }
+
+        .truth-table tr.highlight {
+            background: #334155;
+            color: #facc15;
+            font-weight: bold;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: var(--border-radius);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo" onclick="navigateTo('home')">
+                <div class="logo-icon">✏️</div>
+                <span>PaperCraft Station</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a id="nav-home" class="active" onclick="navigateTo('home')">หน้าแรก (Home)</a></li>
+                    <li><a id="nav-products" onclick="navigateTo('products')">สินค้า (Products)</a></li>
+                    <li>
+                        <a id="nav-checkout" onclick="navigateTo('checkout')">
+                            ตะกร้าสินค้า (Checkout)
+                            <span class="cart-badge" id="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ==================== PAGE 1: HOME ==================== -->
+        <section id="page-home" class="page-section active">
+            <div class="hero-banner">
+                <h1>ยินดีต้อนรับสู่ PaperCraft Station</h1>
+                <p>ร้านเครื่องเขียนคุณภาพ พร้อมระบบประมวลผลด้วยทฤษฎีคณิตศาสตร์ดิสครีต</p>
+            </div>
+
+            <!-- Discrete Math Panel for Home -->
+            <div class="math-panel">
+                <h3>🧮 Discrete Math Application: Set & Logic (Home Page)</h3>
+                <p>1. <strong>Unique Set Construction:</strong> ดึงหมวดหมู่สินค้าแบบไม่ซ้ำกันจากข้อมูลจักรวาลสัมพัทธ์ $U$ ด้วย <code>new Set()</code></p>
+                <p>2. <strong>Cardinality ($|S|$):</strong> คำนวณจำนวนประเภทหมวดหมู่ที่มีในร้าน</p>
+                <div class="math-code" id="home-math-output">
+                    <!-- Dynamic Output -->
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: 20px;">สินค้าแนะนำ (Featured Items)</h2>
+            <div class="grid-3" id="featured-products-container">
+                <!-- Dynamic Content -->
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 2: PRODUCTS ==================== -->
+        <section id="page-products" class="page-section">
+            <h2 style="margin-bottom: 20px;">รายการสินค้าทั้งหมด & ระบบกรองด้วย Set Operations</h2>
+
+            <!-- Discrete Math Panel for Products -->
+            <div class="math-panel">
+                <h3>🧮 Discrete Math Application: Operations on Sets (Products Page)</h3>
+                <p>เลือกปุ่มเพื่อทดสอบการประมวลผลทางพีชคณิตเซต (Set Algebra):</p>
+                <ul>
+                    <li><strong>Union ($A \cup B$):</strong> สินค้าที่เป็นหมวด Pencil OR Pen</li>
+                    <li><strong>Intersection ($A \cap B$):</strong> สินค้าที่เป็นหมวด Pen AND มีสินค้าในสต็อก (In Stock)</li>
+                    <li><strong>Difference ($A \setminus B$):</strong> สินค้าที่เป็นหมวด Pencil BUT NOT ในหมวด Paper</li>
+                </ul>
+                <div class="math-code" id="products-math-output">
+                    <!-- Dynamic Output -->
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label><strong>ค้นหาชื่อสินค้า:</strong></label>
+                    <input type="text" id="search-input" class="search-input" placeholder="พิมพ์ชื่อสินค้า..." oninput="applyFilters()">
+                </div>
+                <div class="filter-group">
+                    <label><strong>Set Operations Mode:</strong></label>
+                    <div class="filter-btn-group">
+                        <button class="filter-btn active" id="btn-all" onclick="setOperationFilter('ALL')">ทั้งหมด (Universe U)</button>
+                        <button class="filter-btn" id="btn-union" onclick="setOperationFilter('UNION')">Union (Pencil ∪ Pen)</button>
+                        <button class="filter-btn" id="btn-intersect" onclick="setOperationFilter('INTERSECT')">Intersection (Pen ∩ InStock)</button>
+                        <button class="filter-btn" id="btn-diff" onclick="setOperationFilter('DIFF')">Difference (Pencil \ Paper)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="grid-3" id="products-container">
+                <!-- Dynamic Content -->
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 3: CHECKOUT ==================== -->
+        <section id="page-checkout" class="page-section">
+            <h2 style="margin-bottom: 20px;">ตะกร้าสินค้า & สรุปคำสั่งซื้อ</h2>
+
+            <!-- Discrete Math Panel for Checkout -->
+            <div class="math-panel">
+                <h3>🧮 Discrete Math Application: Propositional Logic & Set Difference (Checkout Page)</h3>
+                <p>1. <strong>Boolean Logic Engine:</strong> ประเมินประพจน์เงื่อนไขส่วนลดและค่าจัดส่งฟรี</p>
+                <p>• <code>DiscountEligible = (IsMember ∧ Subtotal >= 300) ∨ HasCoupon</code></p>
+                <p>• <code>FreeShipping = (Subtotal >= 500 ∧ ¬IsExpress) ∨ IsVIP</code></p>
+                <p>2. <strong>Set Difference Recommendation ($U \setminus C$):</strong> แนะนำเฉพาะสินค้าที่ไม่อยู่ในตะกร้าปัจจุบัน</p>
+                <div class="math-code" id="checkout-math-output">
+                    <!-- Dynamic Output -->
+                </div>
+            </div>
+
+            <div id="cart-content">
+                <!-- Dynamic Checkout Layout or Empty Cart -->
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. DATA MODEL (Universe Set U)
+        // ==========================================
+        const UNIVERSE_PRODUCTS = [
+            { id: 1, name: "ปากกาลูกลื่น Gel Ink 0.5", category: "Pen", price: 25, inStock: true, icon: "🖊️" },
+            { id: 2, name: "ดินสอกด Graph-X 0.5mm", category: "Pencil", price: 45, inStock: true, icon: "✏️" },
+            { id: 3, name: "สมุดโน้ตปกหนัง Grid A5", category: "Paper", price: 120, inStock: true, icon: "📓" },
+            { id: 4, name: "ปากกาเน้นข้อความ Pastel Pack", category: "Pen", price: 85, inStock: false, icon: "🖍️" },
+            { id: 5, name: "ดินสอสีไม้ MasterArt 12 สี", category: "Pencil", price: 95, inStock: true, icon: "🎨" },
+            { id: 6, name: "กระดาษโน้ต Sticky Notes 3x3", category: "Paper", price: 35, inStock: true, icon: "📑" },
+            { id: 7, name: "ปากกาหมึกซึม Calligraphy", category: "Pen", price: 220, inStock: true, icon: "✒️" },
+            { id: 8, name: "ไส้ดินสอกด 2B 0.5mm", category: "Pencil", price: 20, inStock: true, icon: "✏️" }
+        ];
+
+        // Global State
+        let activePage = 'home';
+        let currentFilterMode = 'ALL';
+        let cartMap = new Map(); // Store item ID -> { product, quantity }
+        let userState = {
+            isMember: true,
+            hasCoupon: false,
+            isVIP: false,
+            isExpress: false
+        };
+
+        // ==========================================
+        // 2. NAVIGATION SYSTEM
+        // ==========================================
+        function navigateTo(pageId) {
+            activePage = pageId;
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            document.getElementById(`nav-${pageId}`).classList.add('active');
+
+            if (pageId === 'home') renderHomePage();
+            if (pageId === 'products') renderProductsPage();
+            if (pageId === 'checkout') renderCheckoutPage();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // 3. PAGE 1: HOME RENDERER
+        // ==========================================
+        function renderHomePage() {
+            // Apply Set theory to extract unique categories
+            const categorySet = new Set();
+            UNIVERSE_PRODUCTS.forEach(p => categorySet.add(p.category));
+
+            // Math Explanation Output
+            const mathOutput = document.getElementById('home-math-output');
+            mathOutput.innerHTML = `
+Universe U Size |U| = ${UNIVERSE_PRODUCTS.length} items
+Category Set C = { ${Array.from(categorySet).map(c => `"${c}"`).join(', ')} }
+Cardinality |C| = ${categorySet.size} categories
+Logic Check: IsLoggedIn = ${localStorage.getItem('isLoggedIn') || 'false'} -> Show Welcome Banner: ${!(localStorage.getItem('isLoggedIn') === 'true') ? 'True (Guest)' : 'False (Member)'}
+            `;
+
+            // Render Featured Products (First 3 items)
+            const featuredContainer = document.getElementById('featured-products-container');
+            featuredContainer.innerHTML = '';
+            UNIVERSE_PRODUCTS.slice(0, 3).forEach(product => {
+                featuredContainer.innerHTML += createProductCardHTML(product);
+            });
+        }
+
+        // ==========================================
+        // 4. PAGE 2: PRODUCTS & SET OPERATIONS
+        // ==========================================
+        function setOperationFilter(mode) {
+            currentFilterMode = mode;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            if(mode === 'ALL') document.getElementById('btn-all').classList.add('active');
+            if(mode === 'UNION') document.getElementById('btn-union').classList.add('active');
+            if(mode === 'INTERSECT') document.getElementById('btn-intersect').classList.add('active');
+            if(mode === 'DIFF') document.getElementById('btn-diff').classList.add('active');
+            
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const keyword = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            // Define Sets based on properties
+            const pencilSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Pencil').map(p => p.id));
+            const penSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Pen').map(p => p.id));
+            const paperSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Paper').map(p => p.id));
+            const inStockSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.inStock).map(p => p.id));
+
+            let filteredList = [];
+            let mathFormulaText = "";
+
+            if (currentFilterMode === 'ALL') {
+                filteredList = UNIVERSE_PRODUCTS;
+                mathFormulaText = `Mode: Universe U (All Items) | Count: ${filteredList.length}`;
+            } else if (currentFilterMode === 'UNION') {
+                // A ∪ B
+                filteredList = UNIVERSE_PRODUCTS.filter(p => pencilSet.has(p.id) || penSet.has(p.id));
+                mathFormulaText = `Set A (Pencil) = {${Array.from(pencilSet).join(',')}}
+Set B (Pen) = {${Array.from(penSet).join(',')}}
+Operation: A ∪ B = {x | x ∈ A ∨ x ∈ B}
+Result IDs: {${filteredList.map(p=>p.id).join(', ')}} | Count: ${filteredList.length}`;
+            } else if (currentFilterMode === 'INTERSECT') {
+                // A ∩ B
+                filteredList = UNIVERSE_PRODUCTS.filter(p => penSet.has(p.id) && inStockSet.has(p.id));
+                mathFormulaText = `Set A (Pen) = {${Array.from(penSet).join(',')}}
+Set B (InStock) = {${Array.from(inStockSet).join(',')}}
+Operation: A ∩ B = {x | x ∈ A ∧ x ∈ B}
+Result IDs: {${filteredList.map(p=>p.id).join(', ')}} | Count: ${filteredList.length}`;
+            } else if (currentFilterMode === 'DIFF') {
+                // A \ B
+                filteredList = UNIVERSE_PRODUCTS.filter(p => pencilSet.has(p.id) && !paperSet.has(p.id));
+                mathFormulaText = `Set A (Pencil) = {${Array.from(pencilSet).join(',')}}
+Set B (Paper) = {${Array.from(paperSet).join(',')}}
+Operation: A \ B = {x | x ∈ A ∧ x ∉ B}
+Result IDs: {${filteredList.map(p=>p.id).join(', ')}} | Count: ${filteredList.length}`;
+            }
+
+            // Keyword filter (Intersection with search keyword)
+            if (keyword) {
+                filteredList = filteredList.filter(p => p.name.toLowerCase().includes(keyword));
+                mathFormulaText += `
+[AND Filtered by Keyword: "${keyword}"]`;
+            }
+
+            // Render Output Math
+            document.getElementById('products-math-output').innerText = mathFormulaText;
+
+            // Render Cards
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            if (filteredList.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px;">ไม่พบสินค้าที่ตรงตามเงื่อนไขเซต</div>';
+            } else {
+                filteredList.forEach(product => {
+                    container.innerHTML += createProductCardHTML(product);
+                });
+            }
+        }
+
+        function renderProductsPage() {
+            applyFilters();
+        }
+
+        // ==========================================
+        // 5. PAGE 3: CHECKOUT & BOOLEAN LOGIC
+        // ==========================================
+        function toggleUserFlag(flag) {
+            userState[flag] = !userState[flag];
+            renderCheckoutPage();
+        }
+
+        function renderCheckoutPage() {
+            const container = document.getElementById('cart-content');
+            
+            if (cartMap.size === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <h3>🛒 ตะกร้าสินค้าของคุณยังว่างอยู่</h3>
+                        <p style="margin: 15px 0;">เลือกซื้อสินค้าในหน้ารายการสินค้าเพื่อทดสอบคำนวณราคาด้วย Discrete Logic</p>
+                        <button class="btn" style="max-width: 200px;" onclick="navigateTo('products')">ไปที่หน้าสินค้า</button>
+                    </div>
+                `;
+                // Set Difference with Empty Cart (U \ ∅ = U)
+                renderRecommendations([]);
+                updateCheckoutMathPanel(0, false, false);
+                return;
+            }
+
+            // Calculate Subtotal using Array.reduce
+            const cartItems = Array.from(cartMap.values());
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+
+            // Boolean Logic Evaluation
+            const isDiscountEligible = (userState.isMember && subtotal >= 300) || userState.hasCoupon;
+            const isFreeShipping = (subtotal >= 500 && !userState.isExpress) || userState.isVIP;
+
+            const discountAmount = isDiscountEligible ? subtotal * 0.10 : 0;
+            const shippingFee = isFreeShipping ? 0 : 40;
+            const finalTotal = subtotal - discountAmount + shippingFee;
+
+            // Render Cart Table & Controls
+            container.innerHTML = `
+                <div class="checkout-grid">
+                    <div>
+                        <table class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th>สินค้า</th>
+                                    <th>ราคา</th>
+                                    <th>จำนวน</th>
+                                    <th>รวม</th>
+                                    <th>การทำงาน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${cartItems.map(item => `
+                                    <tr>
+                                        <td>${item.product.icon} ${item.product.name}</td>
+                                        <td>฿${item.product.price}</td>
+                                        <td>
+                                            <button onclick="updateQuantity(${item.product.id}, -1)" style="padding: 2px 8px;">-</button>
+                                            <span style="margin: 0 8px; font-weight: bold;">${item.quantity}</span>
+                                            <button onclick="updateQuantity(${item.product.id}, 1)" style="padding: 2px 8px;">+</button>
+                                        </td>
+                                        <td>฿${item.product.price * item.quantity}</td>
+                                        <td><button onclick="removeFromCart(${item.product.id})" style="color: red; border:none; background:none; cursor:pointer;">ลบ</button></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+
+                        <!-- Recommendation Section via Set Difference U \ C -->
+                        <div style="margin-top: 30px;">
+                            <h3>💡 สินค้าแนะนำเพิ่มเติม (Set Difference: U \ C)</h3>
+                            <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">แสดงเฉพาะสินค้าในจักรวาล U ที่ไม่อยู่ในตะกร้า C ของคุณ</p>
+                            <div class="grid-3" id="recommendations-container"></div>
+                        </div>
+                    </div>
+
+                    <!-- Summary & Logic Panel -->
+                    <div class="summary-card">
+                        <h3>สรุปคำสั่งซื้อ</h3>
+                        <div style="margin: 15px 0;">
+                            <div class="summary-item">
+                                <span>ราคารวมสินค้า (Subtotal)</span>
+                                <span>฿${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>ส่วนลด (Discount 10%)</span>
+                                <span style="color: ${isDiscountEligible ? 'green' : '#aaa'};">
+                                    ${isDiscountEligible ? `-฿${discountAmount.toFixed(2)}` : '฿0.00'}
+                                </span>
+                            </div>
+                            <div class="summary-item">
+                                <span>ค่าจัดส่ง (Shipping)</span>
+                                <span>${isFreeShipping ? '<span style="color:green;">ฟรี</span>' : `฿${shippingFee}`}</span>
+                            </div>
+                            <div class="summary-item total">
+                                <span>ยอดสุทธิ (Total)</span>
+                                <span>฿${finalTotal.toFixed(2)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Boolean Flags -->
+                        <div style="border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                            <label><strong>ทดสอบเงื่อนไข Boolean Logic:</strong></label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" ${userState.isMember ? 'checked' : ''} onchange="toggleUserFlag('isMember')">
+                                    เป็นสมาชิก (IsMember)
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" ${userState.hasCoupon ? 'checked' : ''} onchange="toggleUserFlag('hasCoupon')">
+                                    มีคูปองส่วนลด (HasCoupon)
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" ${userState.isVIP ? 'checked' : ''} onchange="toggleUserFlag('isVIP')">
+                                    สมาชิก VIP (IsVIP)
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" ${userState.isExpress ? 'checked' : ''} onchange="toggleUserFlag('isExpress')">
+                                    ส่งแบบด่วนพิเศษ (IsExpress)
+                                </label>
+                            </div>
+                        </div>
+
+                        <button class="btn" onclick="alert('สั่งซื้อสำเร็จ! ระบบได้ประมวลผลคำสั่งซื้อเรียบร้อยแล้ว')">ยืนยันการสั่งซื้อ</button>
+                    </div>
+                </div>
+            `;
+
+            renderRecommendations(cartItems.map(item => item.product.id));
+            updateCheckoutMathPanel(subtotal, isDiscountEligible, isFreeShipping);
+        }
+
+        function updateCheckoutMathPanel(subtotal, isDiscountEligible, isFreeShipping) {
+            const mathOutput = document.getElementById('checkout-math-output');
+            mathOutput.innerHTML = `
+P1 (IsMember) = ${userState.isMember}, P2 (Subtotal >= 300) = ${subtotal >= 300}, P3 (HasCoupon) = ${userState.hasCoupon}
+=> Discount Expression: (IsMember ∧ Subtotal >= 300) ∨ HasCoupon
+=> Evaluate: (${userState.isMember} ∧ ${subtotal >= 300}) ∨ ${userState.hasCoupon}  ===>  <span class="math-highlight">${isDiscountEligible ? 'TRUE (ได้รับส่วนลด)' : 'FALSE (ไม่ได้รับส่วนลด)'}</span>
+
+Q1 (Subtotal >= 500) = ${subtotal >= 500}, Q2 (¬IsExpress) = ${!userState.isExpress}, Q3 (IsVIP) = ${userState.isVIP}
+=> FreeShipping Expression: (Subtotal >= 500 ∧ ¬IsExpress) ∨ IsVIP
+=> Evaluate: (${subtotal >= 500} ∧ ${!userState.isExpress}) ∨ ${userState.isVIP}  ===>  <span class="math-highlight">${isFreeShipping ? 'TRUE (ส่งฟรี)' : 'FALSE (คิดค่าส่ง ฿40)'}</span>
+            `;
+        }
+
+        // Recommendations via Set Difference (U \ C)
+        function renderRecommendations(cartProductIds) {
+            const container = document.getElementById('recommendations-container');
+            if(!container) return;
+
+            const cartSet = new Set(cartProductIds);
+            // Difference: U \ C
+            const recommendedProducts = UNIVERSE_PRODUCTS.filter(p => !cartSet.has(p.id) && p.inStock);
+
+            container.innerHTML = '';
+            recommendedProducts.slice(0, 3).forEach(product => {
+                container.innerHTML += createProductCardHTML(product);
+            });
+        }
+
+        // ==========================================
+        // 6. HELPER FUNCTIONS & CART MANAGEMENT
+        // ==========================================
+        function createProductCardHTML(product) {
+            const isInCart = cartMap.has(product.id);
+            return `
+                <div class="card">
+                    <div>
+                        <div class="card-img">${product.icon}</div>
+                        <span class="card-badge">${product.category}</span>
+                        <div class="card-title">${product.name}</div>
+                        <div style="font-size: 12px; color: ${product.inStock ? 'green' : 'red'}; margin-bottom: 8px;">
+                            ${product.inStock ? '● มีสินค้าในสต็อก' : '○ สินค้าหมด'}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="price">฿${product.price}</div>
+                        <button class="btn ${isInCart ? 'btn-outline' : ''}" 
+                            ${!product.inStock ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''}
+                            onclick="addToCart(${product.id})">
+                            ${isInCart ? 'เพิ่มอีก 1 ชิ้น' : 'เพิ่มลงตะกร้า'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addToCart(productId) {
+            const product = UNIVERSE_PRODUCTS.find(p => p.id === productId);
+            if (!product || !product.inStock) return;
+
+            if (cartMap.has(productId)) {
+                const item = cartMap.get(productId);
+                item.quantity += 1;
+            } else {
+                cartMap.set(productId, { product: product, quantity: 1 });
+            }
+
+            updateCartBadge();
+            if (activePage === 'checkout') renderCheckoutPage();
+            if (activePage === 'products') applyFilters();
+            if (activePage === 'home') renderHomePage();
+        }
+
+        function updateQuantity(productId, delta) {
+            if (cartMap.has(productId)) {
+                const item = cartMap.get(productId);
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cartMap.delete(productId);
+                }
+                updateCartBadge();
+                renderCheckoutPage();
+            }
+        }
+
+        function removeFromCart(productId) {
+            cartMap.delete(productId);
+            updateCartBadge();
+            renderCheckoutPage();
+        }
+
+        function updateCartBadge() {
+            // Count total items using Set/Map size or quantity reduce
+            let totalCount = 0;
+            cartMap.forEach(item => totalCount += item.quantity);
+            document.getElementById('cart-count').innerText = totalCount;
+        }
+
+        // Initialize App
+        window.onload = function() {
+            renderHomePage();
+        };
+    </script>
+</body>
+</html>
