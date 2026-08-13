@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายการสินค้าทั้งหมด - PaperCraft Station</title>
+    <title>สินค้าทั้งหมด - Sweet Note Shop</title>
     <style>
         /* [DESIGN SYSTEM: Pastel Modern Theme] */
         :root {
@@ -52,23 +52,16 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 22px;
             font-weight: bold;
             color: var(--primary);
             text-decoration: none;
         }
 
-        .logo-icon {
-            background: var(--primary);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
+        .logo img {
+            object-fit: contain;
+            border-radius: 6px;
         }
 
         nav ul {
@@ -313,8 +306,8 @@
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">
-                <div class="logo-icon">✏️</div>
-                <span>PaperCraft Station</span>
+                <img src="logo.jpg" alt="Sweet Note Shop Logo" style="height: 40px; width: auto;">
+                <span>Sweet Note Shop</span>
             </a>
             <nav>
                 <ul>
@@ -338,7 +331,7 @@
             <p>เลือกซื้อเครื่องเขียนคุณภาพ ค้นหาและเลือกดูตามหมวดหมู่ที่คุณต้องการ</p>
         </div>
 
-        <!-- Filter & Search Toolbar (Clean UI) -->
+        <!-- Filter & Search Toolbar (E-Commerce Style UI) -->
         <div class="filter-toolbar">
             <!-- Search Bar -->
             <div class="search-box">
@@ -346,7 +339,7 @@
                 <input type="text" id="search-input" class="search-input" placeholder="ค้นหาชื่อสินค้า..." oninput="applyFilters()">
             </div>
 
-            <!-- E-Commerce Category Buttons -->
+            <!-- E-Commerce Category Filter Buttons -->
             <div class="filter-btn-group">
                 <button class="filter-btn active" id="btn-all" onclick="setFilterMode('ALL')">สินค้าทั้งหมด</button>
                 <button class="filter-btn" id="btn-union" onclick="setFilterMode('PEN_AND_PENCIL')">ปากกาและดินสอ</button>
@@ -380,11 +373,10 @@
         // Global State สำหรับโหมดกรองสินค้า
         let currentFilterMode = 'ALL';
 
-        // เปลี่ยนโหมดตัวกรองสินค้า
+        // สลับโหมดการกรองสินค้าและอัปเดตสไตล์ของปุ่ม UI
         function setFilterMode(mode) {
             currentFilterMode = mode;
 
-            // อัปเดตสถานะ Active ของปุ่ม UI
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             if (mode === 'ALL') document.getElementById('btn-all').classList.add('active');
             if (mode === 'PEN_AND_PENCIL') document.getElementById('btn-union').classList.add('active');
@@ -396,12 +388,12 @@
 
         // =========================================================================
         // [DISCRETE MATH: SET OPERATIONS & SEARCH ENGINE]
-        // ฟังก์ชันประมวลผลการกรองสินค้าด้วย Set Operations
+        // ฟังก์ชันประมวลผลการกรองสินค้าด้วย Set Operations และ String Searching
         // =========================================================================
         function applyFilters() {
             const keyword = document.getElementById('search-input').value.toLowerCase().trim();
 
-            // 1. กำหนด Subsets จาก Universal Set U ด้วย Set Constructor และ JS Map/Filter
+            // 1. สร้าง Subsets จาก Universal Set U โดยใช้ Set Constructor และ Array.prototype.filter()
             const penSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Pen').map(p => p.id));
             const pencilSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Pencil').map(p => p.id));
             const paperSet = new Set(UNIVERSE_PRODUCTS.filter(p => p.category === 'Paper').map(p => p.id));
@@ -409,37 +401,40 @@
 
             let filteredList = [];
 
-            // 2. ประมวลผลทางพีชคณิตเซต (Set Algebra) ตามตัวเลือกที่คลิก
+            // 2. ประมวลผลทางพีชคณิตเซต (Set Algebra) ตามตัวเลือกปุ่มที่ถูกคลิก
             if (currentFilterMode === 'ALL') {
-                // [Universal Set U]: แสดงรายการทั้งหมด
+                // [Universal Set U]: แสดงสินค้าทั้งหมดภายในร้าน
                 filteredList = UNIVERSE_PRODUCTS;
 
             } else if (currentFilterMode === 'PEN_AND_PENCIL') {
                 // [Set Union: A ∪ B] (ปุ่ม "ปากกาและดินสอ")
                 // สูตรเซต: { x ∈ U | x ∈ Pencil ∨ x ∈ Pen }
+                // ใช้ Set.prototype.has() ตรวจสอบความเป็นสมาชิกร่วมกับตัวดำเนินการ Logical OR (||)
                 filteredList = UNIVERSE_PRODUCTS.filter(p => pencilSet.has(p.id) || penSet.has(p.id));
 
             } else if (currentFilterMode === 'PEN_IN_STOCK') {
                 // [Set Intersection: A ∩ B] (ปุ่ม "ปากกาพร้อมส่ง")
                 // สูตรเซต: { x ∈ U | x ∈ Pen ∧ x ∈ InStock }
+                // ใช้ Set.prototype.has() ร่วมกับตัวดำเนินการ Logical AND (&&)
                 filteredList = UNIVERSE_PRODUCTS.filter(p => penSet.has(p.id) && inStockSet.has(p.id));
 
             } else if (currentFilterMode === 'PENCIL_OTHER') {
                 // [Set Difference: A \ B] (ปุ่ม "ดินสอ (หมวดหมู่อื่นๆ)")
                 // สูตรเซต: { x ∈ U | x ∈ Pencil ∧ x ∉ Paper }
+                // ใช้ Set.prototype.has() ร่วมกับตัวดำเนินการ Logical NOT (!)
                 filteredList = UNIVERSE_PRODUCTS.filter(p => pencilSet.has(p.id) && !paperSet.has(p.id));
             }
 
-            // 3. กรองซ้ำด้วยคำค้นหาจาก Search Bar (Intersection กับ String Search using includes())
+            // 3. กรองซ้ำด้วยคำค้นหาจาก Search Bar (Logical Intersection ร่วมกับ String.prototype.includes())
             if (keyword !== '') {
                 filteredList = filteredList.filter(p => p.name.toLowerCase().includes(keyword));
             }
 
-            // 4. แสดงผลสินค้าที่กรองได้ขึ้นบนหน้าจอ UI
+            // 4. นำผลลัพธ์จากการดำเนินการเซตไปแสดงบน UI
             renderProductsGrid(filteredList);
         }
 
-        // แสดงผลการ์ดสินค้า
+        // แสดงผลการ์ดสินค้าบน Grid
         function renderProductsGrid(products) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
@@ -455,6 +450,7 @@
             }
 
             const cart = getCartFromStorage();
+            // สร้าง Set สำหรับสืบค้นการเป็นสมาชิกในตะกร้า (Membership Check)
             const cartItemIds = new Set(cart.map(item => item.id));
 
             products.forEach(product => {
@@ -487,7 +483,7 @@
         // [CART & LOCAL STORAGE MANAGEMENT]
         // =========================================================================
         function getCartFromStorage() {
-            const storedCart = localStorage.getItem('papercraft_cart');
+            const storedCart = localStorage.getItem('sweetnote_cart');
             return storedCart !== null ? JSON.parse(storedCart) : [];
         }
 
@@ -504,9 +500,9 @@
                 cart.push({ id: product.id, name: product.name, price: product.price, icon: product.icon, quantity: 1 });
             }
 
-            localStorage.setItem('papercraft_cart', JSON.stringify(cart));
+            localStorage.setItem('sweetnote_cart', JSON.stringify(cart));
             updateCartBadge();
-            applyFilters(); // รีเฟรชหน้าเพื่ออัปเดตปุ่มในตะกร้า
+            applyFilters();
         }
 
         function updateCartBadge() {
@@ -516,7 +512,7 @@
             document.getElementById('cart-count').innerText = totalCount;
         }
 
-        // Initialize Page
+        // เริ่มการทำงานระบบเมื่อโหลดหน้าเว็บ
         window.onload = function() {
             updateCartBadge();
             applyFilters();
